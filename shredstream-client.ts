@@ -22,7 +22,7 @@ function resolveProtoDir(): string {
 
   throw new Error(
     `shredstream.proto não encontrado. Tentei: ${candidates.join(', ')}\n` +
-    `Crie a pasta 'protos/' com o arquivo shredstream.proto dentro, ou defina PROTO_DIR no .env`
+    `Crie a pasta 'protos/' com o arquivo shredstream.proto dentro`
   );
 }
 
@@ -106,7 +106,7 @@ export class ShredstreamClient extends EventEmitter {
         });
         this.isConnecting = false;
         this.emit('connected');
-        console.log(`Proxy Shredstream conectado em ${this.proxyTarget}`);
+        console.log(`Conectado em ${this.proxyTarget}`);
         return;
       } catch (err: any) {
         this.emit('connect-failed', { attempt, message: err?.message });
@@ -130,9 +130,6 @@ export class ShredstreamClient extends EventEmitter {
       this.emit('stream-created');
 
       this.stream.on('data', (data: any) => {
-        // INSTRUMENTAÇÃO: timestamp de alta resolução no instante exato em que
-        // o evento 'data' do gRPC chega no Node, ANTES de qualquer
-        // processamento -- ponto zero pra medir o resto do pipeline.
         const recvAtNs = process.hrtime.bigint();
 
         // Envelopar a decodificação em setImmediate libera a rede gRPC
