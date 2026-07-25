@@ -1,4 +1,4 @@
-# Solana Shredstream Examples
+# Shredstream Examples
 
 This repository contains small examples demonstrating how to receive and decode Solana Shredstream data using TypeScript.
 
