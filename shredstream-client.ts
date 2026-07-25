@@ -6,8 +6,6 @@ import path from 'path';
 import fs from 'fs';
 import { decodeShredstreamEntries } from './solana-entry-decoder';
 
-// Resolve o diretório do .proto de forma robusta, sem depender de uma
-// estrutura fixa de pastas.
 function resolveProtoDir(): string {
   const candidates = [
     process.env.PROTO_DIR,
